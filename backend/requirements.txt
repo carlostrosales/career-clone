@@ -1,0 +1,8 @@
+requests
+python-dotenv
+pypdf
+openai
+openai-agents
+pydantic
+uvicorn
+fastapi
