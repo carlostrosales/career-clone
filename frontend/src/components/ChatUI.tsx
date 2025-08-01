@@ -1,5 +1,4 @@
-import './App.css';
-import { ChatUI } from './components/ChatUI';
+import React from 'react';
 
 type MessageRole = 'system' | 'assistant' | 'user';
 
@@ -48,20 +47,14 @@ interface ChatMessageProps {
   message: Message;
 }
 
-const arrayOfMessageObjects: Conversations = {
-  conversation: [
-    { id: '1', content: 'This is test 1.', role: 'system' },
-    { id: '2', content: 'This is test 2.', role: 'user' },
-    { id: '3', content: 'This is test 3.', role: 'assistant' },
-  ],
+export const ChatUI = ({
+  isQuerying,
+  onSubmit,
+  placeholder,
+  disabled,
+  conversations,
+  customSubmitIcon,
+}: ChatUIProps): React.ReactElement => {
+  console.log(isQuerying, onSubmit, placeholder, disabled, conversations, customSubmitIcon);
+  return <div></div>;
 };
-
-function App() {
-  return (
-    <>
-      <ChatUI isQuerying={false} disabled={false} conversations={arrayOfMessageObjects} />
-    </>
-  );
-}
-
-export default App;
