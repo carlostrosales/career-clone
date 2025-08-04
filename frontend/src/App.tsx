@@ -75,7 +75,7 @@ function App() {
         onSubmit={handleSubmit}
         placeholder="Placeholder"
         isQuerying={isQuerying}
-        disabled={false}
+        disabled={isQuerying}
         conversations={chatConversation}
       />
     </>

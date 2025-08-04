@@ -59,11 +59,11 @@ export const ChatUI = ({
 }: ChatUIProps): React.ReactElement => {
   console.log(isQuerying, onSubmit, placeholder, disabled, conversations, customSubmitIcon);
   return (
-    <div>
-      <div>
+    <div style={{ height: 'calc(100vh - 68px)' }}>
+      <div className="flex w-full justify-center overflow-y-auto pb-8" style={{ maxHeight: 'calc(100vh - 250px)' }}>
         <ChatConversation conversations={conversations} isQuerying={isQuerying} />
       </div>
-      <div>
+      <div className="absolute bottom-12 left-0 w-full">
         <ChatInput disabled={disabled} placeholder={placeholder} onSubmit={onSubmit} />
       </div>
     </div>
