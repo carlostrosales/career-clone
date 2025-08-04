@@ -1,5 +1,6 @@
 import './App.css';
 import { ChatUI } from './components/ChatUI';
+import { useState } from 'react';
 
 type MessageRole = 'system' | 'assistant' | 'user';
 
@@ -25,7 +26,7 @@ type Conversations = {
 
 interface ChatUIProps {
   isQuerying: boolean;
-  onSubmit: (message: string) => void;
+  onSubmit?: (message: string) => void;
   placeholder: string;
   disabled: boolean;
   conversations: Conversations;
@@ -48,18 +49,35 @@ interface ChatMessageProps {
   message: Message;
 }
 
-const arrayOfMessageObjects: Conversations = {
-  conversation: [
-    { id: '1', content: 'This is test 1.', role: 'system' },
-    { id: '2', content: 'This is test 2.', role: 'user' },
-    { id: '3', content: 'This is test 3.', role: 'assistant' },
-  ],
-};
-
 function App() {
+  const [isQuerying, setIsQuerying] = useState<boolean>(false);
+  const [chatConversation, setChatConversations] = useState<Conversations>({
+    conversation: [
+      { id: '1', content: 'This is test 1.', role: 'system' },
+      { id: '2', content: 'This is test 2.', role: 'user' },
+      { id: '3', content: 'This is test 3.', role: 'assistant' },
+    ],
+  });
+
+  const handleSubmit = (value: string) => {
+    setIsQuerying(true);
+    setChatConversations((prevState) => ({
+      conversation: [
+        ...prevState.conversation,
+        { id: (prevState.conversation.length + 1).toString(), role: 'user', content: value },
+      ],
+    }));
+  };
+
   return (
     <>
-      <ChatUI isQuerying={false} disabled={false} conversations={arrayOfMessageObjects} />
+      <ChatUI
+        onSubmit={handleSubmit}
+        placeholder="Placeholder"
+        isQuerying={isQuerying}
+        disabled={false}
+        conversations={chatConversation}
+      />
     </>
   );
 }

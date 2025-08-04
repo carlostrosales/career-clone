@@ -1,6 +1,4 @@
 import React from 'react';
-import { ChatConversation } from './ChatConversation';
-import { ChatInput } from './ChatInput';
 
 type MessageRole = 'system' | 'assistant' | 'user';
 
@@ -35,7 +33,7 @@ interface ChatUIProps {
 
 interface ChatInputProps {
   disabled: boolean;
-  onSubmit?: (message: string) => void;
+  onSubmit: (message: string) => void;
   placeholder: string;
   customSubmitIcon?: React.ReactElement;
 }
@@ -49,23 +47,6 @@ interface ChatMessageProps {
   message: Message;
 }
 
-export const ChatUI = ({
-  isQuerying,
-  onSubmit,
-  placeholder,
-  disabled,
-  conversations,
-  customSubmitIcon,
-}: ChatUIProps): React.ReactElement => {
-  console.log(isQuerying, onSubmit, placeholder, disabled, conversations, customSubmitIcon);
-  return (
-    <div>
-      <div>
-        <ChatConversation conversations={conversations} isQuerying={false} />
-      </div>
-      <div>
-        <ChatInput disabled={false} placeholder="placeholder" />
-      </div>
-    </div>
-  );
+export const ChatConversations = ({ conversations, isQuerying }: ChatConversationProps): React.ReactElement => {
+  return <div>Chat Conversations</div>;
 };
