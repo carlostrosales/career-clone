@@ -26,7 +26,7 @@ type Conversations = {
 
 interface ChatUIProps {
   isQuerying: boolean;
-  onSubmit?: (message: string) => void;
+  onSubmit: (message: string) => void;
   placeholder: string;
   disabled: boolean;
   conversations: Conversations;
@@ -61,10 +61,10 @@ export const ChatUI = ({
   return (
     <div>
       <div>
-        <ChatConversation conversations={conversations} isQuerying={false} />
+        <ChatConversation conversations={conversations} isQuerying={isQuerying} />
       </div>
       <div>
-        <ChatInput disabled={false} placeholder="placeholder" />
+        <ChatInput disabled={disabled} placeholder={placeholder} onSubmit={onSubmit} />
       </div>
     </div>
   );

@@ -26,7 +26,7 @@ type Conversations = {
 
 interface ChatUIProps {
   isQuerying: boolean;
-  onSubmit?: (message: string) => void;
+  onSubmit: (message: string) => void;
   placeholder: string;
   disabled: boolean;
   conversations: Conversations;

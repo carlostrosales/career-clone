@@ -24,7 +24,7 @@ type Conversations = {
 
 interface ChatUIProps {
   isQuerying: boolean;
-  onSubmit?: (message: string) => void;
+  onSubmit: (message: string) => void;
   placeholder: string;
   disabled: boolean;
   conversations: Conversations;
@@ -47,6 +47,14 @@ interface ChatMessageProps {
   message: Message;
 }
 
-export const ChatConversations = ({ conversations, isQuerying }: ChatConversationProps): React.ReactElement => {
-  return <div>Chat Conversations</div>;
+export const ChatConversation = ({ conversations, isQuerying }: ChatConversationProps): React.ReactElement => {
+  return isQuerying ? (
+    <>
+      {conversations.conversation.map((conversation: Message) => (
+        <div key={conversation.id}>{conversation.content}</div>
+      ))}
+    </>
+  ) : (
+    <></>
+  );
 };

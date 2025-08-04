@@ -24,7 +24,7 @@ type Conversations = {
 
 interface ChatUIProps {
   isQuerying: boolean;
-  onSubmit?: (message: string) => void;
+  onSubmit: (message: string) => void;
   placeholder: string;
   disabled: boolean;
   conversations: Conversations;
@@ -47,7 +47,7 @@ interface ChatMessageProps {
   message: Message;
 }
 
-export const ChatInput = ({ disabled, placeholder }: ChatInputProps): React.ReactElement => {
+export const ChatInput = ({ disabled, placeholder, onSubmit }: ChatInputProps): React.ReactElement => {
   return (
     <div>
       <form>
