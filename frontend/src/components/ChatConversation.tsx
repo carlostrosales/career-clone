@@ -1,5 +1,8 @@
 import React from 'react';
 import { ChatMessage } from './ChatMessage';
+import { Loading } from 'react-daisyui';
+import type { RefObject } from 'react';
+import { useEffect } from 'react';
 
 type MessageRole = 'system' | 'assistant' | 'user';
 
@@ -42,20 +45,32 @@ interface ChatInputProps {
 interface ChatConversationProps {
   conversations: Conversations;
   isQuerying: boolean;
+  chatConversationsContainerRef: RefObject<HTMLDivElement | null>;
 }
 
 interface ChatMessageProps {
   message: Message;
 }
 
-export const ChatConversation = ({ conversations, isQuerying }: ChatConversationProps): React.ReactElement => {
-  return isQuerying ? (
-    <>
-      {conversations.conversation.map((conversation: Message) => (
-        <ChatMessage message={conversation} key={conversation.id} />
-      ))}
-    </>
-  ) : (
-    <></>
+export const ChatConversation = ({
+  conversations,
+  isQuerying,
+  chatConversationsContainerRef,
+}: ChatConversationProps): React.ReactElement => {
+  useEffect(() => {
+    const chatConversationsContainer = chatConversationsContainerRef?.current;
+    if (chatConversationsContainer) {
+      setTimeout(() => {
+        chatConversationsContainer.scrollTo(0, chatConversationsContainer.scrollHeight);
+      }, 10);
+    }
+  }, [conversations.conversation]);
+
+  return (
+    <div className="w-2/3">
+      {conversations &&
+        conversations.conversation.map((conversation: Message) => <ChatMessage message={conversation} />)}
+      {isQuerying && <Loading className="mt-4 ml-16" variant="dots" size="lg" />}
+    </div>
   );
 };
