@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button, Textarea } from 'react-daisyui';
 import { useRef } from 'react';
+import type { RefObject } from 'react';
 
 type MessageRole = 'system' | 'assistant' | 'user';
 
@@ -43,6 +44,7 @@ interface ChatInputProps {
 interface ChatConversationProps {
   conversations: Conversations;
   isQuerying: boolean;
+  chatConversationsContainerRef: RefObject<HTMLDivElement | null>;
 }
 
 interface ChatMessageProps {
@@ -51,10 +53,14 @@ interface ChatMessageProps {
 
 export const ChatInput = ({ disabled, placeholder, onSubmit }: ChatInputProps): React.ReactElement => {
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
+
   const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
     const TextArea = textAreaRef?.current;
-    onSubmit(TextArea!.value);
+    if (onSubmit && TextArea) {
+      onSubmit(TextArea.value);
+      TextArea.value = '';
+    }
   };
 
   return (
@@ -64,6 +70,7 @@ export const ChatInput = ({ disabled, placeholder, onSubmit }: ChatInputProps): 
         className={`resize-none w-2/3 max-h-48 overflow-y-auto`}
         ref={textAreaRef}
         placeholder={placeholder}
+        disabled={disabled}
       ></Textarea>
       <Button shape={'square'} className="absolute ml-[58%]" onClick={handleSubmit} disabled={disabled}>
         {'Submit'}
