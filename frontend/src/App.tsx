@@ -1,6 +1,7 @@
 import './App.css';
 import { ChatUI } from './components/ChatUI';
 import { useState } from 'react';
+import type { RefObject } from 'react';
 
 type MessageRole = 'system' | 'assistant' | 'user';
 
@@ -43,6 +44,7 @@ interface ChatInputProps {
 interface ChatConversationProps {
   conversations: Conversations;
   isQuerying: boolean;
+  chatConversationsContainerRef: RefObject<HTMLDivElement | null>;
 }
 
 interface ChatMessageProps {
@@ -69,6 +71,20 @@ function App() {
         { id: (prevState.conversation.length + 1).toString(), role: 'user', content: value },
       ],
     }));
+
+    setTimeout(() => {
+      setIsQuerying(false);
+      setChatConversations((prevState) => ({
+        conversation: [
+          ...prevState.conversation,
+          {
+            id: (prevState.conversation.length + 1).toString(),
+            role: 'assistant',
+            content: 'This is a sample chat bot response.',
+          },
+        ],
+      }));
+    }, 3000);
   };
 
   return (
