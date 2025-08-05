@@ -1,4 +1,5 @@
 import React from 'react';
+import { ChatMessage } from './ChatMessage';
 
 type MessageRole = 'system' | 'assistant' | 'user';
 
@@ -13,7 +14,7 @@ type Message = {
   id: string;
   content: string;
   role: MessageRole;
-  userInfo?: string;
+  userInfo?: User;
 };
 
 type Conversations = {
@@ -33,7 +34,7 @@ interface ChatUIProps {
 
 interface ChatInputProps {
   disabled: boolean;
-  onSubmit: (message: string) => void;
+  onSubmit?: (message: string) => void;
   placeholder: string;
   customSubmitIcon?: React.ReactElement;
 }
@@ -51,7 +52,7 @@ export const ChatConversation = ({ conversations, isQuerying }: ChatConversation
   return isQuerying ? (
     <>
       {conversations.conversation.map((conversation: Message) => (
-        <div key={conversation.id}>{conversation.content}</div>
+        <ChatMessage message={conversation} key={conversation.id} />
       ))}
     </>
   ) : (

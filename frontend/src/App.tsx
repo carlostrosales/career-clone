@@ -15,7 +15,7 @@ type Message = {
   id: string;
   content: string;
   role: MessageRole;
-  userInfo?: string;
+  userInfo?: User;
 };
 
 type Conversations = {
@@ -35,7 +35,7 @@ interface ChatUIProps {
 
 interface ChatInputProps {
   disabled: boolean;
-  onSubmit: (message: string) => void;
+  onSubmit?: (message: string) => void;
   placeholder: string;
   customSubmitIcon?: React.ReactElement;
 }
@@ -49,11 +49,13 @@ interface ChatMessageProps {
   message: Message;
 }
 
+const TEST_USER_INFO = { firstName: 'Test', lastName: 'User' };
+
 function App() {
   const [isQuerying, setIsQuerying] = useState<boolean>(false);
   const [chatConversation, setChatConversations] = useState<Conversations>({
     conversation: [
-      { id: '1', content: 'This is test 1.', role: 'system' },
+      { id: '1', content: 'This is test 1.', role: 'system', userInfo: TEST_USER_INFO },
       { id: '2', content: 'This is test 2.', role: 'user' },
       { id: '3', content: 'This is test 3.', role: 'assistant' },
     ],

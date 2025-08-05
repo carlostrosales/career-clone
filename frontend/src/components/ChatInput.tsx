@@ -15,7 +15,7 @@ type Message = {
   id: string;
   content: string;
   role: MessageRole;
-  userInfo?: string;
+  userInfo?: User;
 };
 
 type Conversations = {
@@ -35,7 +35,7 @@ interface ChatUIProps {
 
 interface ChatInputProps {
   disabled: boolean;
-  onSubmit: (message: string) => void;
+  onSubmit?: (message: string) => void;
   placeholder: string;
   customSubmitIcon?: React.ReactElement;
 }

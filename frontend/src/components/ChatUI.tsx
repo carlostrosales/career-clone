@@ -15,7 +15,7 @@ type Message = {
   id: string;
   content: string;
   role: MessageRole;
-  userInfo?: string;
+  userInfo?: User;
 };
 
 type Conversations = {
