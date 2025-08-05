@@ -2,6 +2,7 @@ import { useRef } from 'react';
 import { Avatar, Button } from 'react-daisyui';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRobot, faUser } from '@fortawesome/free-solid-svg-icons';
+import type { RefObject } from 'react';
 
 type MessageRole = 'system' | 'assistant' | 'user';
 
@@ -44,6 +45,7 @@ interface ChatInputProps {
 interface ChatConversationProps {
   conversations: Conversations;
   isQuerying: boolean;
+  chatConversationsContainerRef: RefObject<HTMLDivElement | null>;
 }
 
 interface ChatMessageProps {
@@ -56,8 +58,8 @@ export const ChatMessage = ({ message }: ChatMessageProps) => {
   const isBot = message.role !== 'user';
 
   return (
-    <div>
-      <div>
+    <div className="mt-4">
+      <div className="flex items-center">
         <Avatar shape="circle" className="mr-4">
           <div className="bg-neutral text-neutral-content h-10 w-10">
             {isBot ? (
@@ -69,15 +71,10 @@ export const ChatMessage = ({ message }: ChatMessageProps) => {
             )}
           </div>
         </Avatar>
+        <h4 className="font-semibold select-none">{isBot ? 'Robot' : 'You'}</h4>
       </div>
       <div className="ml-16 mt-4">
         <div ref={messageRef}>{message.content}</div>
-        {isBot && (
-          <div className="mt-4">
-            <Button size="sm" shape="square" color="ghost"></Button>
-          </div>
-        )}
-        ;
       </div>
     </div>
   );

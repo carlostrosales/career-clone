@@ -1,6 +1,8 @@
 import React from 'react';
 import { ChatConversation } from './ChatConversation';
 import { ChatInput } from './ChatInput';
+import { useRef } from 'react';
+import type { RefObject } from 'react';
 
 type MessageRole = 'system' | 'assistant' | 'user';
 
@@ -43,6 +45,7 @@ interface ChatInputProps {
 interface ChatConversationProps {
   conversations: Conversations;
   isQuerying: boolean;
+  chatConversationsContainerRef: RefObject<HTMLDivElement | null>;
 }
 
 interface ChatMessageProps {
@@ -57,13 +60,21 @@ export const ChatUI = ({
   conversations,
   customSubmitIcon,
 }: ChatUIProps): React.ReactElement => {
-  console.log(isQuerying, onSubmit, placeholder, disabled, conversations, customSubmitIcon);
+  const chatConversationsContainerRef = useRef<HTMLDivElement>(null);
   return (
-    <div style={{ height: 'calc(100vh - 68px)' }}>
-      <div className="flex w-full justify-center overflow-y-auto pb-8" style={{ maxHeight: 'calc(100vh - 250px)' }}>
-        <ChatConversation conversations={conversations} isQuerying={isQuerying} />
+    <div className="flex flex-col h-screen">
+      <div
+        ref={chatConversationsContainerRef}
+        className="flex-1 w-full justify-center overflow-y-auto pb-8"
+        style={{ minHeight: '200px' }}
+      >
+        <ChatConversation
+          conversations={conversations}
+          isQuerying={isQuerying}
+          chatConversationsContainerRef={chatConversationsContainerRef}
+        />
       </div>
-      <div className="absolute bottom-12 left-0 w-full">
+      <div className="w-full py-4 bg-base-100">
         <ChatInput disabled={disabled} placeholder={placeholder} onSubmit={onSubmit} />
       </div>
     </div>
